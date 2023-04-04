@@ -3,9 +3,16 @@
 }
 
 div.ia21-player{
+    display: flex;
+    flex-direction: column;
     border: 1px solid black;
+    display: inline-block;
+    width: 720px;
 }
 
+div.ia21-player video {
+    width: 100%;
+}
 div.ia21-player div.controllers{
     border-top: 1px solid black;
     display: flex;
