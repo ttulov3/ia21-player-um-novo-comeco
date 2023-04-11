@@ -13,29 +13,7 @@
 <body>
     <div class="ia21-player">
         <video>
-            <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-            <source src="https://www.w3schools.com/tags/movie.ogg" type="video/ogg">
-        </video>
-        <div class="controllers">
-            <button class="play-pause" data-deleteme="⏸">
-                ▶
-            </button>
-            <div class="dragbar timeline">
-                <div class="draggable"></div>
-            </div>
-            <div class="timer">
-                00:00
-            </div>
-            <div class="dragbar volume">
-                <div class="draggable"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="ia21-player">
-        <video>
-            <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-            <source src="https://www.w3schools.com/tags/movie.ogg" type="video/ogg">
+            <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         </video>
         <div class="controllers">
             <button class="play-pause" data-deleteme="⏸">
@@ -61,13 +39,18 @@
             const video = container.querySelector("video")
             const timeline = container.querySelector(".dragbar.timeline")
             const timelineDrag = timeline.querySelector(".draggable")
-            const timre = container.querySelector("timer")
+            const timer = container.querySelector(".timer")
             btPlayPause.onclick = () => video.play()
+            
+            video.currentTime = 58
 
             video.addEventListener("timeupdate", () => {
                 const percent = (video.currentTime / video.duration) * 100
                 timelineDrag.style.setProperty("--percent", '${percent}%')
-                timer.innerText = video.currentTime = math.floor(video.currentTime ) 
+                timer.innerText = Math.floor(video.currentTime)
+                let m = Math.floor(video.currentTime / 60)
+                let s = Math.floor(video.currentTime) 
+                timer.innerText = `${m % 60}:${s % 60}`
             })
         })
 

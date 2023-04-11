@@ -6,7 +6,6 @@ div.ia21-player{
     display: flex;
     flex-direction: column;
     border: 1px solid black;
-    display: inline-block;
     width: 720px;
 }
 
@@ -40,13 +39,13 @@ div.ia21-player div.controllers div.dragbar::before{
 }
 
 div.ia21-player div.controllers div.dragbar div.draggable{
-   --percent: 0%;
-   background-color: black;
-   width: .5rem;
-   height: .5rem;
-   border-radius: 50%;
-   cursor: pointer;
-   position: absolute;
-   top:calc(50% - .25rem);
-   left:(var(--percent) - .25rem)
+    --percent: 0%;
+    background-color: black;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top:calc(50% - .25rem);
+    left:(var(--percent) - .25rem)
 }
