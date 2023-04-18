@@ -16,7 +16,7 @@
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
         </video>
         <div class="controllers">
-            <button class="play-pause" data-deleteme="⏸">
+            <button class="play-pause" data-play-icon="▶" data-pause-icon="Z">
                 ▶
             </button>
             <div class="dragbar timeline">
@@ -40,7 +40,16 @@
             const timeline = container.querySelector(".dragbar.timeline")
             const timelineDrag = timeline.querySelector(".draggable")
             const timer = container.querySelector(".timer")
-            btPlayPause.onclick = () => video.play()
+            
+            btPlayPause.addEventListener("click", () => {
+                if (video.paused){
+                    video.play()
+                    btPlayPause.innerText = btPlayPause.dataset.pauseIcon
+                    return
+                }
+                video.play()
+                btPlayPause.innerText = btPlayPause.dataset.playIcon
+            })
             
             video.currentTime = 58
 
