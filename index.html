@@ -7,17 +7,17 @@
     <title>Isa Muito Linda </title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <script defer async src='main.js'></script>
 </head>
 
 <body>
     <div class="ia21-player">
         <video>
             <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                type="video/mp4">
+            type="video/mp4">
         </video>
         <div class="controllers">
-            <button class="play-pause" data-play-icon="▶" data-pause-icon="Z">
+            <button class="play-pause" data-play-icon="▶" data-pause-icon="⏸">
                 ▶
             </button>
             <div class="dragbar timeline">
@@ -31,119 +31,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const containers = document.querySelectorAll("div.ia21-player")
-
-        containers.forEach(container => {
-            const btPlayPause = container.querySelector("button.play-pause")
-            const video = container.querySelector("video")
-            const timeline = container.querySelector(".dragbar.timeline")
-            const timelineDrag = timeline.querySelector(".draggable")
-            const timer = container.querySelector(".timer")
-
-            btPlayPause.addEventListener("click", () => {
-                if (video.paused) {
-                    video.play()
-                    btPlayPause.innerText = btPlayPause.dataset.pauseIcon
-                    return
-                }
-                video.play()
-                btPlayPause.innerText = btPlayPause.dataset.playIcon
-            })
-
-            video.currentTime = 58
-
-            video.addEventListener("timeupdate", () => {
-                const index = video.currentTime / video.duration
-                const percent = index * 100
-                timelineDrag.style.setProperty("--percent", '${percent}%')
-                timer.innerText = Math.floor(video.currentTime)
-                let m = Math.floor(video.currentTime / 60)
-                let s = Math.floor(video.currentTime)
-                timer.innerText = `${m % 60}:${s % 60}`
-            })
-
-            const dragbars = container.querySelectorAll(".dragbar")
-
-            dragbars.forEach(dragbar => {
-                const dragabble = dragbar.querySelector(".draggable")
-
-                dragbar.addEventListener("click", ev => {
-                    const width = Math.floor(dragbar.getBoundingClientRect().width)
-                    const index = ev.offsetX / width
-                    const percent = index * 100
-                    dragabble.style.setProperty("--percent", `${percent}%`)
-
-                    if (dragbar.classList.contains("timeline")) {
-                        video.currentTime = video.duration * index
-                        return
-                    }
-
-                    if (dragbar.classList.contains("volume")) {
-                        video.currentTime = video.volume * index
-                        return
-                    }
-
-                    const dragbars = container.querySelectorAll(".dragbar")
-
-                    dragbars.forEach(dragbar => {
-                        const dragabble = dragbar.querySelector(".draggable")
-
-                        if (dragbar.classList.contains("volume")) {
-                            dragabble.style.setProperty("--percent", `100%`)
-                        }
-
-                        dragbar.addEventListener("mousedown", ev => {
-                            dragbar.classList.add("dragging")
-                        })
-
-                        dragbar.addEventListener("mouseup", ev => {
-                            dragbar.classList.remove("dragging")
-                        })
-
-                        dragbar.addEventListener("mouseout", ev => {
-                            dragbar.classList.remove("dragging")
-                        })
-
-                        dragbar.addEventListener("mousemove", ev => {
-                            if (ev.target != dragbar || !dragbar.classList.contains("dragging"))
-                                return
-
-                            const width = Math.floor(dragbar.getBoundingClientRect().width)
-                            const index = (ev.offsetX / width)
-                            const percent = index * 100
-
-                            dragabble.style.setProperty("--percent", `${percent}%`)
-                        })
-
-
-                        dragbar.addEventListener("mouseup", ev => {
-                            if (ev.target != dragbar)
-                                return
-
-                            const width = Math.floor(dragbar.getBoundingClientRect().width)
-                            const index = (ev.offsetX / width)
-                            const percent = index * 100
-
-                            dragabble.style.setProperty("--percent", `${percent}%`)
-
-                            if (dragbar.classList.contains("timeline")) {
-                                video.currentTime = video.duration * index
-                                return
-                            }
-
-                            if (dragbar.classList.contains("volume")) {
-                                video.volume = index
-                                return
-                            }
-                        })
-                    })
-                })
-            })
-        })
-
-    </script>
 </body>
 
 </html>
