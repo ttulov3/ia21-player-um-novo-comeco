@@ -17,7 +17,28 @@ containers.forEach(async container => {
   const timer = container.querySelector(".timer")
   const playlist = container.querySelector(".playlist")
   const dragbars = container.querySelectorAll(".dragbar")
-
+  
+  // ---✀------------------------------------------------------
+  // LER PLAYLIST DO ARQUIVO JSON
+  //
+  const requisicao = await fetch(container.dataset.playlist)
+  const json = await requisicao.json()
+  
+  json.forEach(movie => {
+    playlist.innerHTML += `
+    <div>${movie.title}</div>
+    `
+  })
+  
+  // ---✀------------------------------------------------------
+  // BOTÃO ESCONDER
+  //
+  
+  const bt = container.querySelector("button.aparecer")
+  bt.addEventListener("click", () => { 
+    playlist.classList.toggle("hide")
+  })
+  
   // ---✀------------------------------------------------------
   // BOTÃO PLAY PAUSE
   //
@@ -27,11 +48,11 @@ containers.forEach(async container => {
       btPlayPause.innerText = btPlayPause.dataset.pauseIcon
       return
     }
-
+    
     video.pause()
     btPlayPause.innerText = btPlayPause.dataset.playIcon
   })
-
+  
   // ---✀------------------------------------------------------
   // CONTADOR DE TEMPO
   //
@@ -46,55 +67,55 @@ containers.forEach(async container => {
     timelineDrag.style.setProperty("--percent", `${percent}%`)
     timer.innerText = `${sh}:${sm}:${ss}`
   })
-
+  
   // ---✀------------------------------------------------------
   // BARRAS (TIMELINE E VOLUME) 
   //
   dragbars.forEach(dragbar => {
     const dragabble = dragbar.querySelector(".draggable")
-
+    
     if (dragbar.classList.contains("volume")) {
       dragabble.style.setProperty("--percent", `100%`)
     }
-
+    
     dragbar.addEventListener("mousedown", ev => {
       dragbar.classList.add("dragging")
     })
-
+    
     dragbar.addEventListener("mouseup", ev => {
       dragbar.classList.remove("dragging")
     })
-
+    
     dragbar.addEventListener("mouseout", ev => {
       dragbar.classList.remove("dragging")
     })
-
+    
     dragbar.addEventListener("mousemove", ev => {
       if (ev.target != dragbar || !dragbar.classList.contains("dragging"))
-        return
-
+      return
+      
       const width = Math.floor(dragbar.getBoundingClientRect().width)
       const index = (ev.offsetX / width)
       const percent = index * 100
-
+      
       dragabble.style.setProperty("--percent", `${percent}%`)
     })
-
+    
     dragbar.addEventListener("mouseup", ev => {
       if (ev.target != dragbar)
-        return
-
+      return
+      
       const width = Math.floor(dragbar.getBoundingClientRect().width)
       const index = (ev.offsetX / width)
       const percent = index * 100
-
+      
       dragabble.style.setProperty("--percent", `${percent}%`)
-
+      
       if (dragbar.classList.contains("timeline")) {
         video.currentTime = video.duration * index
         return
       }
-
+      
       if (dragbar.classList.contains("volume")) {
         video.volume = index
         return

@@ -10,9 +10,6 @@ body, html {
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: rgb(255, 211, 254);
 }
 
@@ -20,17 +17,23 @@ div.ia21-player {
   display: flex;
   flex-direction: column;
   border: 1px solid rgb(255, 255, 255);
-  width: 70rem;
-  font-size: 3rem;
-  font-family: 'Roboto', sans-serif;
   border-radius: 50px;
   overflow: hidden;
+  
+  font-family: 'Roboto', sans-serif;
+  font-size: 3rem;
   background-color: white;
-  position: relative;
+  width: 40rem;
+  margin: 0 auto;
 }
 
 div.ia21-player video {
+  
   width: 100%;
+}
+
+div.ia21-player .video-container {
+  position: relative;
 }
 
 div.ia21-player div.controllers {
@@ -103,4 +106,15 @@ div.ia21-player div.controllers div.timer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.aparecer{
+  border-radius:40%;
+  border-color: pink;
+  width: 100px;
+  height: 30px;
+}
+
+.hide{
+  display: none;
 }
